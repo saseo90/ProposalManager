@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="login">
+    <!-- 관리자 전체조회 -->
+    <select id="adminlist" resultType="org.pm.manager.login.vo.LoginAccessVo">
+        SELECT adminNo,adminId,adminPassword AS adminPW,adminName 
+        FROM adminInfo
+    </select>
+    <!-- 로그인 정보 확인 -->
+    <select id="checkPW" parameterType="org.pm.manager.login.vo.LoginAccessVo"
+        resultType="org.pm.manager.login.vo.LoginAccessVo">
+        SELECT adminId,adminPassword AS adminPW,adminName 
+        FROM adminInfo
+        where adminId =#{adminId}
+        and adminPassword =#{adminPW}
+    </select>
+</mapper>
