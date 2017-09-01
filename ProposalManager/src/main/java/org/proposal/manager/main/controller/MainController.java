@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *  
  * </pre>
  */
-@Controller("/proposal")
+@Controller("/proposal/main")
 public class MainController {
     
     
@@ -41,7 +41,7 @@ public class MainController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value={"/main","/",""})
+    @RequestMapping(value={"/main"})
     public String moveMainPage() throws Exception{
         return "index";
     }
