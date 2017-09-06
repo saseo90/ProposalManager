@@ -10,8 +10,10 @@
         <property name="locations">
             <list>
                 <value>classpath:/org/egov/pmProps/pmProp.properties</value>
+                <value>classpath:/org/egov/pmProps/service.properties</value>
             </list>
         </property>
+        <property name="fileEncoding" value="UTF-8"/>
     </bean>
     
 <!-- 1. DBSession -->

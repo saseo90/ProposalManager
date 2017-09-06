@@ -1,6 +1,8 @@
 package org.proposal.manager.fastname.service;
 /**
- * 메인페이지 호출을 위한 인터페이스 구현체 클래스
+ * 빠른 검색기능 서비스 클래스
+ * 
+ * 
  * @author 이성현
  * @since 2017.08.26
  * @version 1.0
@@ -23,6 +25,7 @@ public class FastNameService {
      * 
      */
     public void dminsttName() {
+        
         
     }
 }
