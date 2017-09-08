@@ -1,14 +1,10 @@
-package org.commons.UsrInfoService.PrcrmntCorpIndstrytyInfo;
+package org.commons.naraService.UsrInfoService;
 
 import java.util.List;
 
 /**
- * 빠른 검색기능 서비스 의 Items View Object 클래스
  * 
- * (서비스)조달업체업종정보조회 (service)getPrcrmntCorpIndstrytyInfo
- * 
- * 필수항목(2) 
- * String bizno= "사업자등록번호", String hdoffceDivNm= "본사구분명"
+ * 응답받은 내용 XML 을 변환한 결과 View Object
  * 
  * @author 이성현
  * @since 2017.08.26
@@ -23,15 +19,21 @@ import java.util.List;
  *   2017.08.26   이성현      최초 생성
  *  
  * </pre>
+ *
  */
-public class PrcrmntCorpIndstrytyInfoList {
-    public PrcrmntCorpIndstrytyInfoList(){};
-    
+public class ItemsVo {
+    public ItemsVo(){};
+    /** 결과코드 */
     private String resultCode= "결과코드";
+    /** 결과메시지 */
     private String resultMsg= "결과메세지";
-    private List<PrcrmntCorpIndstrytyInfoVo> PrcrmntCorpIndstrytyInfoVo = null;//item
+    /** Item */
+    private List<Object> itemObject = null;//item
+    /** 한 페이지 결과 수 */
     private String numOfRows= "한 페이지 결과 수";
+    /** 페이지 번호" */
     private String pageNo= "페이지 번호";
+    /** 전체 결과 수 */
     private String totalCount= "전체 결과 수";
     public String getResultCode() {
         return resultCode;
@@ -63,10 +65,15 @@ public class PrcrmntCorpIndstrytyInfoList {
     public void setTotalCount(String totalCount) {
         this.totalCount = totalCount;
     }
-    public List<PrcrmntCorpIndstrytyInfoVo> getPrcrmntCorpIndstrytyInfoVo() {
-        return PrcrmntCorpIndstrytyInfoVo;
+    public List<Object> getItemObject() {
+        return itemObject;
     }
-    public void setPrcrmntCorpIndstrytyInfoVo(List<PrcrmntCorpIndstrytyInfoVo> prcrmntCorpIndstrytyInfoVo) {
-        PrcrmntCorpIndstrytyInfoVo = prcrmntCorpIndstrytyInfoVo;
+    public void setItemObject(List<Object> itemObject) {
+        this.itemObject = itemObject;
+    }
+    @Override
+    public String toString() {
+        return "ItemsVo [resultCode=" + resultCode + ", resultMsg=" + resultMsg + ", itemObject=" + itemObject
+                + ", numOfRows=" + numOfRows + ", pageNo=" + pageNo + ", totalCount=" + totalCount + "]";
     }
 }

@@ -1,10 +1,10 @@
-package org.commons.UsrInfoService;
+package org.commons.naraService.UsrInfoService.DminsttInfo;
 
 import java.util.List;
-
 /**
+ * 빠른 검색기능 서비스 의 Items View Object 클래스
  * 
- * 응답받은 내용 XML 을 변환한 결과 View Object
+ * (서비스)수요기관정보조회 (service)getDminsttInfo
  * 
  * @author 이성현
  * @since 2017.08.26
@@ -19,22 +19,18 @@ import java.util.List;
  *   2017.08.26   이성현      최초 생성
  *  
  * </pre>
- *
  */
-public class ItemsVo {
-    public ItemsVo(){};
-    /** 결과코드 */
+public class DminsttInfoList {
+    
+    public DminsttInfoList(){};
+    
     private String resultCode= "결과코드";
-    /** 결과메시지 */
     private String resultMsg= "결과메세지";
-    /** Item */
-    private List<Object> itemObject = null;//item
-    /** 한 페이지 결과 수 */
+    private List<DminsttInfoVo> dminsttInfoList = null;//item
     private String numOfRows= "한 페이지 결과 수";
-    /** 페이지 번호" */
     private String pageNo= "페이지 번호";
-    /** 전체 결과 수 */
     private String totalCount= "전체 결과 수";
+
     public String getResultCode() {
         return resultCode;
     }
@@ -65,15 +61,12 @@ public class ItemsVo {
     public void setTotalCount(String totalCount) {
         this.totalCount = totalCount;
     }
-    public List<Object> getItemObject() {
-        return itemObject;
+    public List<DminsttInfoVo> getDminsttInfoList() {
+        return dminsttInfoList;
     }
-    public void setItemObject(List<Object> itemObject) {
-        this.itemObject = itemObject;
+    public void setDminsttInfoList(List<DminsttInfoVo> dminsttInfoList) {
+        this.dminsttInfoList = dminsttInfoList;
     }
-    @Override
-    public String toString() {
-        return "ItemsVo [resultCode=" + resultCode + ", resultMsg=" + resultMsg + ", itemObject=" + itemObject
-                + ", numOfRows=" + numOfRows + ", pageNo=" + pageNo + ", totalCount=" + totalCount + "]";
-    }
+    
+    
 }

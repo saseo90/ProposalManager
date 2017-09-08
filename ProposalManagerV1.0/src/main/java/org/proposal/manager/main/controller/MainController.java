@@ -1,5 +1,8 @@
 package org.proposal.manager.main.controller;
 
+import javax.annotation.Resource;
+
+import org.proposal.manager.UsrInfoService.service.UsrInfoServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller("/proposal")
 public class MainController {
-    
-    
+    @Resource(name="usrInfoService")
+    UsrInfoServiceImpl reqService;
 //    /** EgovBBSUseInfoManageService */
 //    @Resource(name = "EgovBBSUseInfoManageService")
 //    private EgovBBSUseInfoManageService bbsUseService;
@@ -54,6 +57,8 @@ public class MainController {
      */
     @RequestMapping(value={"main"})
     public String moveMainPage(String main) throws Exception{
+        
+        reqService.searchSplyPrdctBizno("1058634153");
         return "index";
     }
     

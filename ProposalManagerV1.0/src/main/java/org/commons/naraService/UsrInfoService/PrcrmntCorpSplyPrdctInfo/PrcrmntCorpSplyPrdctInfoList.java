@@ -1,8 +1,8 @@
-package org.commons.UsrInfoService.PrcrmntCorpSplyPrdctInfo;
+package org.commons.naraService.UsrInfoService.PrcrmntCorpSplyPrdctInfo;
 
 import java.util.List;
 
-import org.commons.UsrInfoService.DminsttInfo.DminsttInfoVo;
+import org.commons.naraService.UsrInfoService.DminsttInfo.DminsttInfoVo;
 
 /**
  * 빠른 검색기능 서비스 의 Items View Object 클래스

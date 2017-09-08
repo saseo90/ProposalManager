@@ -1,6 +1,8 @@
-package org.commons.UsrInfoService.PrcrmntCorpSplyPrdctInfo;
+package org.commons.naraService.UsrInfoService.PrcrmntCorpSplyPrdctInfo;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  * 요청 URI 를 만들기 위한 클래스
@@ -23,16 +25,20 @@ import org.springframework.beans.factory.annotation.Value;
  *
  */
 public class PrcrmntCorpSplyPrdctInfoReqVo {
+
+    protected Logger log = Logger.getLogger(this.getClass());
     /** (필수)baseURI */
-    @Value("${Globals.baseURI}")
     private String baseURI;
+    /** (필수)서비스URI */
+    private String serviceURI="UsrInfoService";
+    /** (필수)Operation URI */
+    private String operationURI="getPrcrmntCorpSplyPrdctInfo";
+    /** (필수)서비스키 */
+    private String ServiceKey;
     /** (필수)한 페이지 결과 수 */
     private String numOfRows = "100";
     /** (필수)페이지 번호 */
     private String pageNo = "1";
-    /** (필수)서비스키 */
-    @Value("${Globals.serviceKey}")
-    private String ServiceKey;
     /** (필수)사업자등록번호 */
     private String bizno = null;
     
@@ -42,19 +48,15 @@ public class PrcrmntCorpSplyPrdctInfoReqVo {
      * 
      * @param bizno 사업자등록번호 
      */
-    public void searchBizno(String bizno){
+    public String searchBizno(String bizno){
         this.bizno = bizno;
+        return makeUriBizno(bizno);
     }
-    private void makeUri(){
-        makeUri(null, null);
-    }
-    private void makeUri(String serviceName){
-        makeUri(null, null);
-    }
-    private void makeUri(String operationName, String serviceName){
-        String baseURI="http://apis.data.go.kr/1230000/UsrInfoService/getPrcrmntCorpSplyPrdctInfo?";
-        baseURI += "numOfRows="+numOfRows+"&pageNo="+pageNo+"&ServiceKey="+ServiceKey+"&bizno="+bizno;
-        
+    private String makeUriBizno(String bizno){
+        String baseURI = this.baseURI+serviceURI+"/"+operationURI
+                +"?"+"&ServiceKey="+ServiceKey+"numOfRows="+numOfRows+"&pageNo="+pageNo+"&bizno="+bizno;
+        //log.error(""+baseURI);
+        return baseURI;
     }
     
 }

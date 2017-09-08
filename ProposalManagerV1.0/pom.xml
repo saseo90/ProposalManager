@@ -2,20 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>PSL</groupId>
+	<groupId>org.proposal</groupId>
 	<artifactId>ProposalManager</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
 	<name>ProposalManager</name>
 	<url>https://github.com/saseo90/ProposalManager</url>
-    
-
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
 
     <properties>
         <java-version>1.7</java-version>
@@ -31,6 +23,7 @@
         <org.hsqldb>2.3.2</org.hsqldb>
         <org.antlr>3.5</org.antlr>
         <org.mariadb.jdbc>1.5.8</org.mariadb.jdbc>
+        <jsoup.version>1.8.3</jsoup.version>
         <com.fasterxml.jackson.core>2.8.8</com.fasterxml.jackson.core>
         <com.google.code.gson>2.6.2</com.google.code.gson>
     </properties>
@@ -170,7 +163,12 @@ https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
             <version>8.4</version>
         </dependency>
         -->
-
+<!-- jsoup : 라이선스(MIT) https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
+        </dependency>
 <!-- JSON : com.fasterxml.jackson.core -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -341,6 +339,7 @@ https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
                 <configuration>
                     <skipTests>true</skipTests>
                     <forkMode>once</forkMode>

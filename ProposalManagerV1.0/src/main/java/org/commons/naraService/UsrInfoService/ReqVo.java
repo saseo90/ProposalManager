@@ -1,4 +1,4 @@
-package org.commons.UsrInfoService;
+package org.commons.naraService.UsrInfoService;
 
 import org.springframework.beans.factory.annotation.Value;
 

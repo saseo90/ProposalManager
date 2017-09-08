@@ -1,4 +1,4 @@
-package org.commons.UsrInfoService.PrcrmntCorpSplyPrdctInfo;
+package org.commons.naraService.UsrInfoService.PrcrmntCorpSplyPrdctInfo;
 /**
  * 빠른 검색기능 서비스 의 Item View Object 클래스
  * 
