@@ -21,8 +21,11 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/AdminLTE/dist/css/skins/_all-skins.css">
 </head>
+<!-- jQuery 2.2.3 -->
+<script src="${pageContext.request.contextPath}/resources/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
 
 <body class="hold-transition skin-green-light sidebar-mini">
+
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -52,8 +55,7 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="${pageContext.request.contextPath}/resources/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+
 <!-- Bootstrap 3.3.6 -->
 <script src="${pageContext.request.contextPath}/resources/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->

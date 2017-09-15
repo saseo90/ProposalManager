@@ -30,13 +30,25 @@
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+            <i class="fa fa-dashboard"></i> <span>성능모니터</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+            <li><a href="${pageContext.request.contextPath}/proposal/monitor"><i class="fa fa-circle-o"></i> 성능모니터 </a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> 통합전산센터 서비스 </a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span> 나라장터 API </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> 기관정보 및 업체정보 서비스  </a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
           </ul>
         </li>

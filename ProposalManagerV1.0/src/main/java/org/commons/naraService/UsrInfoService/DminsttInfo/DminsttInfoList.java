@@ -67,6 +67,12 @@ public class DminsttInfoList {
     public void setDminsttInfoList(List<DminsttInfoVo> dminsttInfoList) {
         this.dminsttInfoList = dminsttInfoList;
     }
+    @Override
+    public String toString() {
+        return "DminsttInfoList [resultCode=" + resultCode + ", resultMsg=" + resultMsg + ", dminsttInfoList="
+                + dminsttInfoList + ", numOfRows=" + numOfRows + ", pageNo=" + pageNo + ", totalCount=" + totalCount
+                + "]";
+    }
     
     
 }

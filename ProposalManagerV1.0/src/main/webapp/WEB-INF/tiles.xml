@@ -16,6 +16,14 @@
 		<put-attribute name="content-wrapper" value="/WEB-INF/pages/sub/sub-content.jsp" />
 	</definition>
     
+    <!-- 모니터링01 : 성능모니터(CPU,MEM,DISK) -->
+    <definition name="monitorEfficiency" extends="index">
+        <put-attribute name="main-topbar" value="/WEB-INF/pages/monitor/efficiency-topbar.jsp" />
+        <put-attribute name="content-wrapper" value="/WEB-INF/pages/monitor/efficiency-content.jsp" />
+    </definition>
+    
+    
+    
     <!-- 에러00 : 에러페이지 -->
     <definition name="error-index" template="/WEB-INF/pages/error-index.jsp">
         <put-attribute name="error-topbar" value="/WEB-INF/pages/error/error-topbar.jsp" />
