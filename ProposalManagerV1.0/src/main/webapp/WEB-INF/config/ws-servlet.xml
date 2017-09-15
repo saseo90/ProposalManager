@@ -8,12 +8,14 @@
 <!-- 웹소켓 사용을 위한 설정파일 -->
 
 <!-- URI 매필과 인터셉터 -->
+<!-- 
 <websocket:handlers>
     <websocket:mapping handler="webalarm" path="/CMWS/myHandler" />
     <websocket:handshake-interceptors>
         <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
     </websocket:handshake-interceptors>
 </websocket:handlers> 
+ -->
 
 <!-- 소켓 핸들러용 빈파일 -->
 <bean id="webalarm" class="org.commons.util.websocket.AlarmWebSocketHandler"/>
