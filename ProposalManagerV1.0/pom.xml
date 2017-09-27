@@ -12,7 +12,7 @@
     <properties>
         <java-version>1.7</java-version>
         <spring.maven.artifact.version>4.1.2.RELEASE</spring.maven.artifact.version>
-        <org.springframework>4.1.2.RELEASE</org.springframework>
+        <org.springframework>4.1.5.RELEASE</org.springframework>
         <egovframework.rte.version>3.6.0</egovframework.rte.version>
         <org.apache.tiles-version>3.0.7</org.apache.tiles-version>
         <javax.servlet.servlet-api>3.0.1</javax.servlet.servlet-api>
@@ -26,6 +26,7 @@
         <jsoup.version>1.8.3</jsoup.version>
         <com.fasterxml.jackson.core>2.8.8</com.fasterxml.jackson.core>
         <com.google.code.gson>2.6.2</com.google.code.gson>
+        <quartz.version>2.2.1</quartz.version>
     </properties>
 
     <repositories>
@@ -89,6 +90,45 @@
             <artifactId>egovframework.rte.fdl.property</artifactId>
             <version>${egovframework.rte.version}</version>
         </dependency>
+<!-- 프레임워크 : speing-core : 이성현 2017.09.15.금 
+     pring-core.jar : 스프링코어 
+-->
+<!--         <dependency>  
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-core</artifactId>
+          <version>${org.springframework}</version>
+        </dependency> -->
+<!-- 프레임워크 : spring-tx 이성현 2017.09.15.금 
+     Transaction dependency is required with Quartz integration -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${org.springframework}</version>
+        </dependency>
+<!-- 프레임워드크 : spring-context : 이성현 2017.09.15.금 
+     spring-context-support.jar : Quartz 지원
+ -->
+        <dependency>  
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context-support</artifactId>
+          <version>${org.springframework}</version>
+        </dependency> 
+<!-- 프레임워크  Quartz framework : 이성현 2017.09.15.금 
+     quartz-2.2.1.jar : Quartz 코어 
+-->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
+<!-- 프레임워크  Quartz framework : 이성현 2017.09.15.금 
+     quartz-jobs-2.2.1.jar : Quartz Job 지원
+ -->
+<!--         <dependency>  
+          <groupId>org.quartz-scheduler</groupId> 
+          <artifactId>quartz-jobs</artifactId> 
+          <version>${quartz.version}</version>
+        </dependency> -->
 <!-- 프레임워크 Tiles : 이성현 2017.06.10.토 -->
         <dependency>
             <groupId>org.apache.tiles</groupId>

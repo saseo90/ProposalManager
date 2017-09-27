@@ -74,15 +74,17 @@
         </property>
     </bean>
 <!-- 화면처리용 JSP 파일명의  prefix, suffix 처리에 대한 mvc 설정  -->
+<!-- 
     <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
         p:viewClass="org.springframework.web.servlet.view.JstlView"
         p:prefix="/WEB-INF/pages/" p:suffix=".jsp" p:contentType="text/html;charset=UTF-8"
         p:order="2">
-    </bean>
+    </bean> 
+-->
 <!-- Object viewResolver : 다운로드 등 페이지 외의 view 출력 -->
     <bean id="viewResolver"
         class="org.springframework.web.servlet.view.BeanNameViewResolver"
-        p:order="3"
+        p:order="2"
         >
     </bean>
 <!--     <bean id="downloadView" class="it.net.sky.cloud.vo.DownloadView"></bean> -->

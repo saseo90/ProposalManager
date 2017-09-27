@@ -59,7 +59,8 @@ public class MoniterController {
     
     /**
      * 
-     * 성능모니터 페이지로 이동한다.
+     * 
+     * 성능모니터 페이지 Ajax 확인 테스트
      *
      * @return
      * @throws Exception

@@ -4,6 +4,7 @@ package org.proposal.manager.monitor.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.proposal.manager.monitor.service.MonitorService;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,8 @@ import egovframework.com.utl.sim.service.EgovSysInfo;
 
 @Service("efficiencyMonitorService")
 public class EfficiencyMonitorService implements MonitorService{
-
+    protected Logger logger = Logger.getLogger(getClass());
+    
     @Override
     public Map<String,Object> monitorOsInfo() throws Exception {
         Map<String,Object> result = new HashMap<String, Object>();
@@ -21,6 +23,7 @@ public class EfficiencyMonitorService implements MonitorService{
         result.put("osName", osName);
         result.put("osPrductor", osPrductor);
         result.put("osVersion", osVersion);
+        logger.error("os정보 "+result);
         return result;
     }
 
