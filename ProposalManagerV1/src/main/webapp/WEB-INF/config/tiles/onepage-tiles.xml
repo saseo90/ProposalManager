@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+<!-- tiles 양식 
+    <definition name="*/*/*" extends="index">
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp"/> 
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}.jsp"/> 
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp"/>
+    </definition> -->
+<!-- 
+    MAIN_01 : PORTAL : 포털 메인페이지 
+-->
+    <definition name="*/main.tiles" extends="portal-index">
+        <put-attribute name="main-topbar"     value="/WEB-INF/page-contents/{1}/main-topbar.jsp" />
+        <put-attribute name="content-wrapper" value="/WEB-INF/page-contents/{1}/main-content.jsp" />
+    </definition>
+
+<!-- ERROR_01 : ERROR PAGE(ALL)
+     ERROR_02 : 404 ERROR PAGE
+     ERROR_03 : 500 ERROR PAGE -->
+    <definition name="error/*.tiles" extends="error-index">
+        <put-attribute name="main-topbar"     value="/WEB-INF/onepage/error/error-topbar.jsp" />
+        <put-attribute name="content-wrapper" value="/WEB-INF/onepage/error/{1}-content.jsp" />
+    </definition>
+
+<!-- ONEPAGE_01 : lockscreen : 잠금화면  
+     ONEPAGE_02 : login      : 로그인페이지 
+     ONEPAGE_03 : register   : 신규회원 가입페이지  -->
+    <definition name="onepage/*.tiles" extends="onepage-index">
+        <put-attribute name="onepage-topbar"  value="/WEB-INF/onepage/{1}/{1}-topbar.jsp" />
+        <put-attribute name="onepage-content" value="/WEB-INF/onepage/{1}/{1}-body.jsp" />
+    </definition>
+
+</tiles-definitions>

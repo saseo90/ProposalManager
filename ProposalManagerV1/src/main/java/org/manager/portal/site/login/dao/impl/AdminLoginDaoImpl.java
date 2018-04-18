@@ -1,0 +1,33 @@
+package org.manager.portal.site.login.dao.impl;
+
+import org.manager.portal.site.login.LoginAccessVo;
+import org.manager.portal.site.login.dao.LoginDao;
+import org.springframework.stereotype.Repository;
+
+import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
+/**
+ * 로그인 처리를 위한 데이터 접근 객체 구현체
+ * @author 이성현
+ * @since 2017.06.26
+ * @version 1.0
+ * @see
+ * 
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *
+ *     수정일             수정자       수정내용
+ *  ------------ ------ ----------------------------
+ *   2017.06.26   이성현      최초 생성
+ *  
+ * </pre>
+ */
+@Repository(value="adminLoginDao")
+public class AdminLoginDaoImpl extends EgovAbstractMapper implements LoginDao{
+
+    @Override
+    public LoginAccessVo loginAdmin(LoginAccessVo vo) throws Exception {
+        //return selectOne("", vo);
+        return null;
+    }
+
+}

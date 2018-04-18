@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+<!-- tiles 양식 
+    <definition name="*/*/*" extends="index">
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}.jsp"/> 
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}.jsp"/> 
+        <put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp"/>
+    </definition> -->
+<!-- monitor_01 : Information Resource Management : 성능모니터(CPU,MEM,DISK) -->
+    <definition name="portal/monitor/Efficiency.tiles" extends="portal-index">
+        <put-attribute name="main-topbar"     value="/WEB-INF/page-contents/monitor/efficiency-topbar.jsp" />
+        <put-attribute name="content-wrapper" value="/WEB-INF/page-contents/monitor/efficiency-content.jsp" />
+    </definition>
+<!-- survey_01 : excel Download : 엑셀다운로드  -->
+    <definition name="portal/survey/excel.tiles" extends="portal-index">
+        <put-attribute name="main-topbar"     value="/WEB-INF/page-contents/survey/excel-topbar.jsp" />
+        <put-attribute name="content-wrapper" value="/WEB-INF/page-contents/survey/excel-content.jsp" />
+    </definition>
+
+</tiles-definitions>

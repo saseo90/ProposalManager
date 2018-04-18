@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+<!-- MAIN_00 : MAIn PAGE -->
+    <definition name="portal-index" template="/WEB-INF/template/portal/index.jsp">
+        <put-attribute name="main-topbar"   value="/WEB-INF/template/portal/topbar.jsp" />
+        <put-attribute name="main-header"   value="/WEB-INF/template/portal/header.jsp" />
+        <put-attribute name="main-sidebar"  value="/WEB-INF/template/portal/sidebar-left.jsp" />
+        <put-attribute name="content-wrapper" value="/WEB-INF/template/portal/content.jsp" />
+        <put-attribute name="main-footer"   value="/WEB-INF/template/portal/footer.jsp" />
+        <put-attribute name="control-sidebar" value="/WEB-INF/template/portal/sidebar-control.jsp" />
+    </definition>
+<!-- ERROR_00   : ERROR PAGE :  -->
+    <definition name="error-index" template="/WEB-INF/template/error/index.jsp">
+        <put-attribute name="main-topbar"   value="/WEB-INF/template/error/topbar.jsp" />
+        <put-attribute name="main-header"   value="/WEB-INF/template/error/header.jsp" />
+        <put-attribute name="content-wrapper" value="/WEB-INF/template/error/content.jsp" />
+        <put-attribute name="main-footer"   value="/WEB-INF/template/error/footer.jsp" />
+    </definition>
+<!-- onepage_00 : one PAGE : -->
+    <definition name="onepage-index" template="/WEB-INF/template/onepage/index.jsp">
+        <put-attribute name="onepage-topbar" value="/WEB-INF/template/onepage/onepage/topbar.jsp" />
+        <put-attribute name="onepage-content" value="/WEB-INF/template/onepage/onepage/content.jsp" />
+    </definition>
+</tiles-definitions>

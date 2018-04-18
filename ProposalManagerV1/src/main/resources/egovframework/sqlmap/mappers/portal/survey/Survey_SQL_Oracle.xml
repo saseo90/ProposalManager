@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="survery" >
+<!-- <typeAlias  alias="SurveryENVVO" type="org.cloud.manager.web.impl.SurveryENVVO" /> 
+<typeAlias  alias="SurveryItemVO" type="org.cloud.manager.web.impl.SurveryItemVO" />
+<typeAlias  alias="SurveryResultVO" type="org.cloud.manager.web.impl.SurveryResultVO" />
+ -->
+ 
+<!-- 라디오 문항 -->
+<select id="survery.surveryExcel" parameterType="org.manager.portal.site.survey.SurveryItemVO" resultType="org.manager.portal.site.survey.SurveryResultVO">
+SELECT MEM_ID, MEM_NAME
+<if test='ITEM_TYPE == "RADIO"'>
+    , LISTAGG(ANSWER_NO ,  ';;;') WITHIN GROUP (ORDER BY ITEM_NO) AS ANSWER_CONT
+</if>
+<if test='ITEM_TYPE == "TEXT"'>
+    , LISTAGG(ANSWER_CONT, ';;;') WITHIN GROUP (ORDER BY ITEM_NO) AS ANSWER_CONT
+</if>
+FROM (
+    SELECT SURVERY_NO, ITEM_NO, ANSWER_NO, ANSWER_CONT ,MEM_NAME ,MEM_ID
+    FROM   SURVERYRESULT
+    WHERE  SURVERY_NO = #{SURVERY_NO}
+    ORDER BY MEM_ID, SURVERY_NO
+)
+GROUP BY MEM_ID,MEM_NAME
+</select>
+
+<select id="survery.surveryInfo" parameterType="java.lang.Integer" resultType="org.manager.portal.site.survey.SurveryENVVO">
+    SELECT SURVERY_NO, SURVERY_SUBJECT,SURVERY_TITLE,SURVERY_CONT,MAXITEM,MAXANSWER
+    FROM  SURVERYENV
+    WHERE SURVERY_NO = #{SURVERY_NO}
+</select>
+<select id="survery.surveryItemList" parameterType="java.lang.Integer" resultType="org.manager.portal.site.survey.SurveryItemVO">
+    SELECT SURVERY_NO, ITEM_NO, ANSWER_NO, ITEM_CONT, ITEM_TYPE
+    FROM   SURVERYITEM
+    WHERE  SURVERY_NO = #{SURVERY_NO}
+</select>
+
+</mapper>
