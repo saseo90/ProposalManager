@@ -250,6 +250,11 @@ https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
             <artifactId>poi</artifactId>
             <version>${org.apache.poi}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${org.apache.poi}</version>
+        </dependency>
 <!-- 파일다운로드 대표이미지
     itext : IText Core PPT (현재 5.5.13)  -->
         <dependency>

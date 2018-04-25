@@ -2,7 +2,7 @@ package org.manager.portal.site.login;
 /**
  * 로그인 처리를 위한 View Object 클래스
  * @author 이성현
- * @since 2017.06.26
+ * @since 2018.04.22
  * @version 1.0
  * @see
  * 
@@ -11,7 +11,7 @@ package org.manager.portal.site.login;
  *
  *     수정일             수정자       수정내용
  *  ------------ ------ ----------------------------
- *   2017.06.26   이성현      최초 생성
+ *   2018.04.22   이성현      최초 생성
  *  
  * </pre>
  */

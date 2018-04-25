@@ -17,5 +17,12 @@
         <put-attribute name="main-topbar"     value="/WEB-INF/page-contents/survey/excel-topbar.jsp" />
         <put-attribute name="content-wrapper" value="/WEB-INF/page-contents/survey/excel-content.jsp" />
     </definition>
-
+<!-- 
+    specification_01 : specification : 포털 명세서 메인페이지 
+-->
+    <definition name="portal/specification/main.tiles" extends="portal-index">
+        <put-attribute name="main-topbar"     value="/WEB-INF/page-contents/portal/specification/main-topbar.jsp" />
+        <put-attribute name="content-wrapper" value="/WEB-INF/page-contents/portal/specification/main-content.jsp" />
+    </definition>
+    
 </tiles-definitions>

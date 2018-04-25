@@ -6,7 +6,7 @@ import org.manager.portal.site.login.LoginAccessVo;
  * 
  * 공통 로그인 처리를 위한 DAO 인터페이스
  * @author 이성현
- * @since 2017.06.26
+ * @since 2018.04.22
  * @version 1.0
  * @see
  * 
@@ -15,7 +15,7 @@ import org.manager.portal.site.login.LoginAccessVo;
  *
  *     수정일             수정자       수정내용
  *  ------------ ------ ----------------------------
- *   2017.06.26   이성현      최초 생성
+ *   2018.04.22   이성현      최초 생성
  *  
  * </pre>
  */

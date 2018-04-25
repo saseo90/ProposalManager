@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * 매인 페이지 호출을 위한 컨트롤러 클래스
  * @author 이성현
- * @since 2017.06.26
+ * @since 2018.04.22
  * @version 1.0
  * @see
  * 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  *     수정일             수정자       수정내용
  *  ------------ ------ ----------------------------
- *   2017.06.26   이성현      최초 생성
+ *   2018.04.22   이성현      최초 생성
  *  
  * </pre>
  */
