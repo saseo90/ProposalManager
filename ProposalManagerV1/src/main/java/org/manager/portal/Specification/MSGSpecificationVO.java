@@ -7,7 +7,7 @@ package org.manager.portal.Specification;
 public class MSGSpecificationVO {
     String MSG_SPECIFY_NO;//(PK)메시지명세번호
     String COM_SE_ID;//(FK)통합서비스아이디(오퍼레이션_아이디)
-    String MSG_GB;//메시지구분(req|rsp)
+    String MSG_GB;//메시지구분(RQS|RSP)
     String ITEM_NM_KR;//항목국문이름
     String ITEM_NM_EN;//항목영문이름
     String ITEM_SIZE;//항목크기
@@ -78,5 +78,4 @@ public class MSGSpecificationVO {
                 + ", SAMPLE_DATA=" + SAMPLE_DATA + ", ITEM_CONT=" + ITEM_CONT
                 + "]";
     }
-    
 }

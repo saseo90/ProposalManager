@@ -7,6 +7,8 @@
 <tiles:insertAttribute name="main-topbar"/>
 <!-- /.main-topbar -->
 <head>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- ico -->
   <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/ico/if_37_940968.ico">
   <!-- Bootstrap 3.3.6 -->
@@ -18,7 +20,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/AdminLTE/Ionicons/2.0.1/css/ionicons.min.css">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"> -->
   <!-- Theme style -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/AdminLTE/dist/css/AdminLTE.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/AdminLTE/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/AdminLTE/dist/css/skins/_all-skins.css">

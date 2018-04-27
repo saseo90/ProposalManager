@@ -1,18 +1,26 @@
 package org.manager.portal.Specification;
 
+import java.io.Serializable;
+
 /**
  * 
  * 메시지명세서 SPECIFY_MSG_TB
  *
  */
-public class SpecificationCOMVO {
+public class SpecificationCOMVO implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    
     String COM_SE_ID;//(PK)통합서비스아이디
+    String OP_ID;//오퍼레이션아이디
     String SPECIFY_GB;//명세서구분(SE|OP)
+    String SE_LV;//     서비스레밸
+    String OP_LV;//     오퍼레이션레밸
     String SE_NM_KR;//  국문이름
     String SE_NM_EN;//  영문이름
     String SE_CONT;//   설명
-    String SE_LV;//     서비스레밸
-    String OP_LV;//     오퍼레이션레밸
     String OP_CD;//     오퍼레이션구분(조회(목록)|조회(단일))
     String URL_DEV;//   서비스URL_개발환경
     String URL_OP;//    서비스URL_운영환경
@@ -20,19 +28,25 @@ public class SpecificationCOMVO {
     String SECU_CE;//   서비스보안_인증
     String SECU_ROLE;// 서비스보안_권한
     String SECU_TLE;//  서비스보안_전송계층암호화
-    String AT_IDS;//    적용기술수준_교환데이터표준
     String AT_IS;//     적용기술수준_인터페이스표준
+    String AT_IDS;//    적용기술수준_교환데이터표준
     String AT_ETC;//    적용기술수준_기타표준
-    String CONS_CONT;// 제약사항_비고
     String DEP_VER;//   서비스배포정보_버전
     String DEP_STR_DT;//서비스배포정보_시작일
     String DEP_DEP_DT;//서비스배포정보_배포일
+    String CONS_CONT;// 제약사항_비고
     String REG_DT;//    등록일
     public String getCOM_SE_ID() {
         return COM_SE_ID;
     }
     public void setCOM_SE_ID(String cOM_SE_ID) {
         COM_SE_ID = cOM_SE_ID;
+    }
+    public String getOP_ID() {
+        return OP_ID;
+    }
+    public void setOP_ID(String oP_ID) {
+        OP_ID = oP_ID;
     }
     public String getSPECIFY_GB() {
         return SPECIFY_GB;

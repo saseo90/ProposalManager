@@ -29,11 +29,8 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan> -->
-<!--     <context:component-scan base-package="org.manger.portal">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-    </context:component-scan>
+
+<!--     
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="cmmn/egovError"/>
         <property name="exceptionMappings">
@@ -58,8 +55,15 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
-<!--    <bean id="jackson2MessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
- -->
+    
+    <bean id="jackson2MessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.BeanNameViewResolver"
+        p:order="4"
+        >
+    </bean>
+    
 <!-- 스케줄러풀 : 스케줄러 -->
 <!--
     <task:scheduler id="mainScheduler" pool-size="10" />

@@ -1,8 +1,6 @@
 package org.manager.portal.Specification.service.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,163 +41,189 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
     @Resource(name="portalSpecificationDAO")
     PortalSpecificationDAO psDAO;
     
-    /**
-     * 라이브러리 종속 : poi-ooxml : XWPFDocument
-     * int code : Object Type Code
-     * int i    : index
-     */
     @Override
-    public void insertSpecificationDOC() {
-        FileInputStream fis = null;
-        String fileName = "D:\\조달청_OpenAPI활용가이드_나라장터_계약정보서비스_1.3_1.docx";
-        try {
-            File file = new File(fileName);
-            fis = new FileInputStream(file.getAbsolutePath());
-            XWPFDocument document = new XWPFDocument(fis);
-            
-            List<IBodyElement> bodyList = document.getBodyElements();
-            int code = -2;
-            int i = 0;
-            List<ServiceVO> result = new ArrayList<ServiceVO>();
-            ServiceVO tempVO = null;
-            for (IBodyElement iBodyElement : bodyList) {
-            String text = iBodyElement.getElementType().name();
-            if("PARAGRAPH".equals(text)){
-                XWPFParagraph para =  (XWPFParagraph) iBodyElement;
-                String temp = para.getParagraphText();
-                if(temp!=null){
-                    if(temp.contentEquals("서비스 개요")){
-                        code = 0;
-                    } else if (temp.contains("오퍼레이션 목록")) {
+    public void insertSpecificationDOC(InputStream is) throws Exception{
+//        FileInputStream fis = null;
+////        String fileName = "D:\\조달청_OpenAPI활용가이드_나라장터_계약정보서비스_1.3_1.docx";
+//        String fileName = "D:\\조달청_OpenAPI활용가이드_나라장터_계약정보서비스_1.3.docx";
+//        File file = new File(fileName);
+//        fis = new FileInputStream(file.getAbsolutePath());
+        XWPFDocument document = new XWPFDocument(is);
+        
+        List<IBodyElement> bodyList = document.getBodyElements();
+        int code = -2;
+        int i = 0;
+        List<ServiceVO> result = new ArrayList<ServiceVO>();
+        ServiceVO tempVO = null;
+        for (IBodyElement iBodyElement : bodyList) {
+        String text = iBodyElement.getElementType().name();
+        if("PARAGRAPH".equals(text)){
+            XWPFParagraph para =  (XWPFParagraph) iBodyElement;
+            String temp = para.getParagraphText();
+            if(temp!=null){
+                if(temp.contentEquals("서비스 개요")){
+                    code = 0;
+                } else if (temp.contains("오퍼레이션 목록")) {
 //                        code = 1;
-                    } else if (temp.contains("오퍼레이션 명세")) {
-                        code = 2;
-                    } else if (temp.contentEquals("요청 메시지 명세")) {
-                        code = 3;
-                    } else if (temp.contentEquals("응답 메시지 명세")) {
-                        code = 4;
-                    }
-                } 
-            }else if("TABLE".equals(text)) {
-                if(0==code){//서비스 개요
-                    ServiceVO serviceVO = new ServiceVO();
-                    XWPFTable table = null;
-                    table = document.getTables().get(i);
-                    List<XWPFTableRow> rows = table.getRows();
-                    for(XWPFTableRow row : rows) {
-                        List<XWPFTableCell> cells = row.getTableCells();
-                        String text1 = null;
-                        for (XWPFTableCell cell : cells) {
-                            String text2 = cell.getText();
-                            if(text1!=null){
-                            if("서비스명(국문)".equals(text1)) {
-                                serviceVO.setSE_NM_KR(text2);
-                            }else if("서비스명(영문)".equals(text1)) {
-                                serviceVO.setSE_NM_EN(text2);
-                            }else if("서비스 설명".equals(text1)) {
-                                serviceVO.setSE_CONT(text2);
-                            }else if("서비스 인증/권한".equals(text1)) {
-                                serviceVO.setSECU_CE(text2);
-                            }else if("전송 레벨 암호화".equals(text1)) {
-                                serviceVO.setSECU_TLE(text2);
-                            }else if("교환 데이터 표준".equals(text1)) {
-                                serviceVO.setAT_IDS(text2);
-                            }else if("인터페이스 표준".equals(text1)) {
-                                serviceVO.setAT_IS(text2);
-                            }else if("개발환경".equals(text1)) {
-                                serviceVO.setURL_DEV(text2);
-                            }else if("운영환경".equals(text1)) {
-                                serviceVO.setURL_OP(text2);
-                            }else if("서비스 버전".equals(text1)) {
-                                serviceVO.setDEP_VER(text2);
-                            }else if("서비스 시작일".equals(text1)) {
-                                serviceVO.setDEP_STR_DT(text2);
-                            }else if("배포 일자".equals(text1)) {
-                                serviceVO.setDEP_DEP_DT(text2);
-                            }else if("서비스 이력".equals(text1)) {
-                                serviceVO.setCONS_CONT(text2);
-                            }
-                            }
-                            text1 = text2;
-                        }//for
-                    }//for
-                    result.add(serviceVO);
-                    code = -1;
-                }else if(1==code){//오퍼레이션 목록 
-                    XWPFTable table = null;
-                    XWPFTableRow row = null;
-                    table = document.getTables().get(i);
-                    List<XWPFTableRow> rows = table.getRows();
-                    for (int j = 1; j < rows.size(); j++) {
-                        row = rows.get(j);
-                        List<XWPFTableCell> cells = row.getTableCells();
-                        if(!cells.isEmpty()){
-                            String cont = cells.get(0).getText();
-                            cont = cells.get(1).getText();//일련번호
-                            cont = cells.get(2).getText();//서비스명(국문)
-                            cont = cells.get(3).getText();//오퍼레이션명(영문)
-                            cont = cells.get(4).getText();//오퍼레이션명(국문)
-                            cont = cells.get(5).getText();//메시지명(영문)
-                        }
-                    }
-                    code = -1;
-                }else if(2==code){//오퍼레이션 명세
-                    OperationVO opInfo = new OperationVO();
-                    XWPFTable table = null;
-                    table = document.getTables().get(i);
-                    List<XWPFTableRow> rows = table.getRows();
-                    for(XWPFTableRow row : rows) {
-                        List<XWPFTableCell> cells = row.getTableCells();
-                        String text1 = null;
-                        for (XWPFTableCell cell : cells) {
-                            String text2 = cell.getText();
-                            if(text1!=null){
-                            if("오퍼레이션명(국문)".equals(text1)){
-                                opInfo.setSE_NM_KR(text2);
-                            }else if("오퍼레이션명(영문)".equals(text1)) {
-                                opInfo.setSE_NM_EN(text2);
-                            }else if("오퍼레이션 설명".equals(text1)) 
-                                opInfo.setSE_CONT(text2);{
-                            }
-                            }
-                            text1 = text2;
-                        }//for
-                    }//for
-                    result.get(result.size()-1).setOpInfos(opInfo);
-                    code = -1; 
-                }else if(3==code){//요청 메시지 명세
-                    List<MSGSpecificationVO> msgListReq = createMSGReqList(document, i);
-                    result.get(result.size()-1).getOpInfoLast().setMsgListReq(msgListReq);
-                    code = -1;
-                }else if(4==code){//응답 메시지 명세
-                    List<MSGSpecificationVO> msgListRsp = createMSGRspList(document, i); 
-                    result.get(result.size()-1).getOpInfoLast().setMsgListRsp(msgListRsp);
-                    code = -1; 
-                }//if
-                i++;
-            }//if(PARAGRAPH|table)
-            }//for
-            
-            for (ServiceVO serviceVO : result) {
-                psDAO.insertServiceInfo(serviceVO);
-                List<OperationVO> opInfos = serviceVO.getOpInfos();
-                for (OperationVO opInfo : opInfos) {                    
-                    psDAO.insertOpertationInfo(opInfo);
-                    opInfo.getMsgListReq();
-                    opInfo.getMsgListRsp();
+                } else if (temp.contains("오퍼레이션 명세")) {
+                    code = 2;
+                } else if (temp.contentEquals("요청 메시지 명세")) {
+                    code = 3;
+                } else if (temp.contentEquals("응답 메시지 명세")) {
+                    code = 4;
                 }
-            }            
-        } catch (IOException e) {
-            e.printStackTrace();
+            } 
+        }else if("TABLE".equals(text)) {
+            if(0==code){//서비스 개요
+                ServiceVO serviceVO = new ServiceVO();
+                XWPFTable table = null;
+                table = document.getTables().get(i);
+                List<XWPFTableRow> rows = table.getRows();
+                for(XWPFTableRow row : rows) {
+                    List<XWPFTableCell> cells = row.getTableCells();
+                    String beforeText = null;
+                    for (XWPFTableCell cell : cells) {
+                        String currentText = cell.getText();
+                        if(beforeText==null){
+                        }else if("서비스명(국문)".equals(beforeText)) {
+                            serviceVO.setSE_NM_KR(currentText);
+                        }else if("서비스명(영문)".equals(beforeText)) {
+                            serviceVO.setSE_NM_EN(currentText);
+                        }else if("서비스 설명".equals(beforeText)) {
+                            serviceVO.setSE_CONT(currentText);
+                        }else if("개발환경".equals(beforeText)) {
+                            if(serviceVO.getURL_DEV()==null)serviceVO.setURL_DEV(currentText);
+                        }else if("운영환경".equals(beforeText)) {
+                            if(serviceVO.getURL_OP()==null)serviceVO.setURL_OP(currentText);
+                        }else if("서비스 인증/권한".equals(beforeText)) {
+                            serviceVO.setSECU_CE(currentText);
+                        }else if("전송 레벨 암호화".equals(beforeText)) {
+                            serviceVO.setSECU_TLE(currentText);
+                        }else if("교환 데이터 표준".equals(beforeText)) {
+                            serviceVO.setAT_IDS(currentText);
+//                                System.out.println("교환 데이터 표준"+currentText);
+                        }else if("인터페이스 표준".equals(beforeText)) {
+                            serviceVO.setAT_IS(currentText);
+//                                System.out.println("인터페이스 표준"+currentText);
+                        }else if("서비스 버전".equals(beforeText)) {
+                            serviceVO.setDEP_VER(currentText);
+//                                System.out.println("서비스 버전"+currentText);
+                        }else if("서비스 시작일".equals(beforeText)) {
+                            serviceVO.setDEP_STR_DT(currentText);
+//                                System.out.println("서비스 시작일"+currentText);
+                        }else if("배포 일자".equals(beforeText)) {
+                            serviceVO.setDEP_DEP_DT(currentText);
+//                                System.out.println("배포 일자"+currentText);
+                        }else if("사용 제약 사항 (비고)".contains(beforeText)) {
+                            serviceVO.setCONS_CONT(currentText);
+//                                System.out.println("사용 제약 사항"+currentText);
+                        }
+                        beforeText = currentText;
+                    }//for
+                }//for
+                result.add(serviceVO);
+                code = -1;
+            }else if(1==code){//오퍼레이션 목록 
+                XWPFTable table = null;
+                XWPFTableRow row = null;
+                table = document.getTables().get(i);
+                List<XWPFTableRow> rows = table.getRows();
+                for (int j = 1; j < rows.size(); j++) {
+                    row = rows.get(j);
+                    List<XWPFTableCell> cells = row.getTableCells();
+                    if(!cells.isEmpty()){
+                        String cont = cells.get(0).getText();
+                        cont = cells.get(1).getText();//일련번호
+                        cont = cells.get(2).getText();//서비스명(국문)
+                        cont = cells.get(3).getText();//오퍼레이션명(영문)
+                        cont = cells.get(4).getText();//오퍼레이션명(국문)
+                        cont = cells.get(5).getText();//메시지명(영문)
+                    }
+                }
+                code = -1;
+            }else if(2==code){//오퍼레이션 명세
+                OperationVO opInfo = new OperationVO();
+                XWPFTable table = null;
+                table = document.getTables().get(i);
+                List<XWPFTableRow> rows = table.getRows();
+                for(XWPFTableRow row : rows) {
+                    List<XWPFTableCell> cells = row.getTableCells();
+                    String text1 = null;
+                    for (XWPFTableCell cell : cells) {
+                        String text2 = cell.getText();
+                        if(text1!=null){
+                        if("오퍼레이션명(국문)".equals(text1)){
+                            opInfo.setSE_NM_KR(text2);
+                        }else if("오퍼레이션명(영문)".equals(text1)) {
+                            opInfo.setSE_NM_EN(text2);
+                        }else if("오퍼레이션 설명".equals(text1)) 
+                            opInfo.setSE_CONT(text2);{
+                        }
+                        }
+                        text1 = text2;
+                    }//for
+                }//for
+                result.get(result.size()-1).setOpInfos(opInfo);
+                code = -1; 
+            }else if(3==code){//요청 메시지 명세
+                List<MSGSpecificationVO> msgListReq = createMSGReqList(document, i);
+                result.get(result.size()-1).getOpInfoLast().setMsgListReq(msgListReq);
+                code = -1;
+            }else if(4==code){//응답 메시지 명세
+                List<MSGSpecificationVO> msgListRsp = createMSGRspList(document, i); 
+                result.get(result.size()-1).getOpInfoLast().setMsgListRsp(msgListRsp);
+                code = -1; 
+            }//if
+            i++;
+        }//if(PARAGRAPH|table)
+        }//for
+        
+        for (ServiceVO serviceVO : result) {
+            String successCount = ""+psDAO.insertServiceInfo(serviceVO);
+//                System.out.println("성공::"+successCount);
+//                System.out.println("Service PK::"+serviceVO.getCOM_SE_ID());
+            List<OperationVO> opInfos = serviceVO.getOpInfos();
+            for (OperationVO opInfo : opInfos) {
+                opInfo.setCOM_SE_ID(serviceVO.getCOM_SE_ID());
+                opInfo.setSE_LV(serviceVO.getCOM_SE_ID());
+//                    System.out.println("COM_SE_ID::"+opInfo.getCOM_SE_ID());
+//                    System.out.println("SE_LV::"+opInfo.getSE_LV());
+                String successCountOP = ""+psDAO.insertOpertationInfo(opInfo);
+//                    System.out.println("성공::"+successCountOP);
+                String operationPK=opInfo.getCOM_SE_ID();
+//                System.out.println("Service PK(Operation ID)::"+operationPK);
+//                System.out.println("OP_ID::"+opInfo.getOP_ID());
+                String successCountUp = ""+psDAO.insertOpertationInfo(operationPK);
+//                System.out.println("Operation_LV_UPdate::"+successCountUp);
+                List<MSGSpecificationVO> msgListReq = opInfo.getMsgListReq();
+                for (MSGSpecificationVO msgVO : msgListReq) {
+                    msgVO.setCOM_SE_ID(operationPK);
+//                        System.out.println("항목영문::"+msgVO.getITEM_NM_EN());
+//                        System.out.println("항목국문::"+msgVO.getITEM_NM_KR());
+//                        System.out.println("항목크기::"+msgVO.getITEM_SIZE());
+//                        System.out.println("항목구분::"+msgVO.getITEM_GB());
+//                        System.out.println("생플::"+msgVO.getSAMPLE_DATA());
+//                        System.out.println("항목설명::"+msgVO.getITEM_CONT());
+                    int successCountMSG = psDAO.insertMSGInfo(msgVO);
+//                        System.out.println("성공_요청메시지::"+successCountMSG);
+//                        throw new Exception();
+                }
+                List<MSGSpecificationVO> msgListRsp = opInfo.getMsgListRsp();
+                for (MSGSpecificationVO msgVO : msgListRsp) {
+                    msgVO.setCOM_SE_ID(operationPK);
+                    int successCountMSG = psDAO.insertMSGInfo(msgVO);
+//                        System.out.println("성공_응답메시지::"+successCountMSG);
+                }
+            }
         }
     }
     
     private static List<MSGSpecificationVO> createMSGRspList(XWPFDocument document,int i) {
-        return createMSGList(document,"rsp", i);
+        return createMSGList(document,"RSP", i);
     }
     
     private static List<MSGSpecificationVO> createMSGReqList(XWPFDocument document,int i) {
-        return createMSGList(document,"req", i);
+        return createMSGList(document,"RQS", i);
     }
     
     private static List<MSGSpecificationVO> createMSGList(XWPFDocument document,String MSG_GB,int i) {
@@ -229,7 +253,19 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
                 msgVO.setITEM_CONT(cont);
             }
             msgList.add(msgVO);
+//            System.out.println(msgVO);
         }
+        
         return msgList;
+    }
+
+    @Override
+    public List<ServiceVO> selectServiceInfoALL() throws Exception {
+        return psDAO.selectServiceInfoALL();
+    }
+
+    @Override
+    public List<OperationVO> selectOpInfoALL(String COM_SE_ID)  throws Exception {
+        return psDAO.selectOpInfoALL(COM_SE_ID);
     }
 }

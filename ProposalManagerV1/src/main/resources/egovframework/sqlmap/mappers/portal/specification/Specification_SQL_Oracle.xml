@@ -5,31 +5,7 @@
 
 <mapper namespace="specification" >
 <!-- MyBatis 3.2.6 after : Supports returning multiple fields in a select key : ref. http://blog.mybatis.org/2014/03/mybatis-326-released.html -->
-<!-- <typeAlias  alias="SurveryENVVO" type="org.cloud.manager.web.impl.SurveryENVVO" /> 
-<typeAlias  alias="SurveryItemVO" type="org.cloud.manager.web.impl.SurveryItemVO" />
-<typeAlias  alias="SurveryResultVO" type="org.cloud.manager.web.impl.SurveryResultVO" />
- -->
-<!-- 1.1.서비스 정보 등록 -->
-<insert id="specification.insertServiceInfo" parameterType="String" useGeneratedKeys="true" keyProperty="bNo" >
-
-</insert>
-<!-- 1.2.오퍼레이션 정보 등록 -->
-<insert id="specification.insertOpInfo" parameterType="String" useGeneratedKeys="true" keyProperty="bNo" >
-
-
-</insert>
-<!-- 1.3.응답 메시지 정보 등록 -->
-<insert id="specification.inserMSGRspsInfos" parameterType="String" useGeneratedKeys="true" keyProperty="bNo" >
-
-
-</insert>
-<!-- 1.4.요청 메시지 정보 등록 -->
-<insert id="specification.insertMSGReqsInfos" parameterType="String" useGeneratedKeys="true" keyProperty="bNo" >
-
-
-</insert>
-<!-- 메시지명세 등록 : 요청, 응답 구분 -->
-<insert id="specification.msgInfoInsert">
+<!-- <insert id="specification.msgInfoInsert">
     <selectKey keyProperty="userId, userName" resultType="hashmap" order="BEFORE">
         SELECT 'key1' as userId, 'key2' as userName FROM DUAL
     </selectKey>
@@ -46,5 +22,282 @@
       , #{password}
       , #{age}
     )
+</insert> -->
+
+<!-- 1.1.서비스 정보 등록 -->
+<!-- MYSQL, MSSQL 시퀀스 자동증가 RDB 의 경우
+<insert id="specification.insertServiceInfo" parameterType="org.manager.portal.Specification.ServiceVO" useGeneratedKeys="true" keyProperty="COM_SE_ID" > -->
+<insert id="specification.insertServiceInfo" parameterType="org.manager.portal.Specification.ServiceVO" >
+<selectKey keyProperty="COM_SE_ID" keyColumn="COM_SE_ID" resultType="String" order="BEFORE" >
+SELECT COUNT(*)+1 FROM SPECIFY_SE_TB
+</selectKey>
+INSERT INTO SPECIFY_SE_TB (
+      COM_SE_ID
+    , SPECIFY_GB
+    , SE_LV
+    , OP_LV
+    , SE_NM_KR
+    , SE_NM_EN
+    , SE_CONT
+    , OP_CD
+    , URL_DEV
+    , URL_OP
+    , SECU_IP
+    , SECU_CE
+    , SECU_ROLE
+    , SECU_TLE
+    , AT_IS
+    , AT_IDS
+    , AT_ETC
+    , DEP_VER
+    , DEP_STR_DT
+    , DEP_DEP_DT
+    , CONS_CONT
+    , REG_DT
+) VALUES (
+      #{COM_SE_ID}
+    , 'SE'
+    , (SELECT COUNT(*)+1 FROM SPECIFY_SE_TB)
+    , 0
+    , #{SE_NM_KR}
+    , #{SE_NM_EN}
+    , #{SE_CONT}
+    , null
+    , #{URL_DEV}
+    , #{URL_OP}
+    , null
+    , #{SECU_CE}
+    , null
+    , #{SECU_TLE}
+    , #{AT_IS}
+    , #{AT_IDS}
+    , null
+    , #{DEP_VER}
+    , #{DEP_STR_DT}
+    , #{DEP_DEP_DT}
+    , #{CONS_CONT}
+    , SYSDATE
+)
 </insert>
+<!-- 1.2.오퍼레이션 정보 등록 -->
+<update id="specification.updateOpInfo" parameterType="String" >
+UPDATE SPECIFY_SE_TB
+SET    OP_LV = (
+                SELECT COUNT(*)
+                FROM  SPECIFY_SE_TB A, SPECIFY_SE_TB B
+                WHERE A.SE_LV =  B.SE_LV 
+                AND   B.COM_SE_ID = #{COM_SE_ID}
+                AND   A.SPECIFY_GB = 'OP'
+                )
+WHERE  COM_SE_ID = #{COM_SE_ID}
+</update>
+<!-- 1.2.오퍼레이션 정보 등록 -->
+<insert id="specification.insertOpInfo" parameterType="org.manager.portal.Specification.OperationVO" >
+<selectKey keyProperty="COM_SE_ID" keyColumn="COM_SE_ID" resultType="String" order="BEFORE" >
+SELECT COUNT(*)+1 FROM SPECIFY_SE_TB
+</selectKey>
+INSERT INTO SPECIFY_SE_TB (
+      COM_SE_ID
+    , SPECIFY_GB
+    , SE_LV
+    , OP_LV
+    , SE_NM_KR
+    , SE_NM_EN
+    , SE_CONT
+    , REG_DT
+) VALUES (
+      #{COM_SE_ID}
+    , 'OP'
+    , #{SE_LV}
+    , 1
+    , #{SE_NM_KR}
+    , #{SE_NM_EN}
+    , #{SE_CONT}
+    , SYSDATE
+)
+</insert>
+<!-- 1.3.응답 메시지 정보 등록 -->
+<insert id="specification.inserMSGInfo" parameterType="org.manager.portal.Specification.MSGSpecificationVO" >
+    INSERT INTO SPECIFY_MSG_TB 
+    (
+          MSG_SPECIFY_NO
+        , COM_SE_ID
+        , MSG_GB
+        , ITEM_NM_KR
+        , ITEM_NM_EN
+        , ITEM_SIZE
+        , ITEM_GB
+        , SAMPLE_DATA
+        , ITEM_CONT
+    ) VALUES (
+        (SELECT 'MSG'||LPAD(COUNT(*),4,0) FROM SPECIFY_MSG_TB)
+        , #{COM_SE_ID}
+        , #{MSG_GB}
+        , #{ITEM_NM_KR}
+        , #{ITEM_NM_EN}
+        , #{ITEM_SIZE} 
+        , #{ITEM_GB}
+        , #{SAMPLE_DATA}
+        , #{ITEM_CONT}
+    )
+</insert>
+<!-- 2.1.1.전체조회_서비스  -->
+<select id="specification.selectServiceInfoALL" resultType="org.manager.portal.Specification.ServiceVO" >
+SELECT    COM_SE_ID
+        , SPECIFY_GB
+        , SE_LV
+        , OP_LV
+        , SE_NM_KR
+        , SE_NM_EN
+        , SE_CONT
+        , OP_CD
+        , URL_DEV
+        , URL_OP
+        , SECU_IP
+        , SECU_CE
+        , SECU_ROLE
+        , SECU_TLE
+        , AT_IS
+        , AT_IDS
+        , AT_ETC
+        , DEP_VER
+        , DEP_STR_DT
+        , DEP_DEP_DT
+        , CONS_CONT
+        , REG_DT
+FROM   SPECIFY_SE_TB
+WHERE  SPECIFY_GB = 'SE'
+ORDER BY COM_SE_ID
+</select>
+<!-- 2.1.2.전체조회_오퍼레이션 -->
+<select id="specification.selectOpInfoALL" resultType="org.manager.portal.Specification.OperationVO" parameterType="String">
+SELECT    COM_SE_ID
+        , SPECIFY_GB
+        , SE_LV
+        , OP_LV
+        , SE_NM_KR
+        , SE_NM_EN
+        , SE_CONT
+        , REG_DT
+FROM   SPECIFY_SE_TB
+WHERE  SPECIFY_GB = 'OP'
+AND    SE_LV = #{COM_SE_ID}
+ORDER BY COM_SE_ID
+</select>
+<!-- 2.1.3.전체조회_요청 메시지 -->
+<select id="specification.selectMSGRqsInfoALL" resultType="org.manager.portal.Specification.MSGSpecificationVO" parameterType="String">
+SELECT    MSG_SPECIFY_NO
+        , COM_SE_ID
+        , MSG_GB
+        , ITEM_NM_KR
+        , ITEM_NM_EN
+        , ITEM_SIZE
+        , ITEM_GB
+        , SAMPLE_DATA
+        , ITEM_CONT
+FROM   SPECIFY_MSG_TB
+WHERE  MSG_GB = 'RQS'
+AND    COM_SE_ID = #{COM_SE_ID}
+ORDER BY MSG_SPECIFY_NO
+</select>
+<!-- 2.1.4.전체조회_응답 메시지 -->
+<select id="specification.selectMSGRspInfoALL" resultType="org.manager.portal.Specification.MSGSpecificationVO" parameterType="String">
+SELECT    MSG_SPECIFY_NO
+        , COM_SE_ID
+        , MSG_GB
+        , ITEM_NM_KR
+        , ITEM_NM_EN
+        , ITEM_SIZE
+        , ITEM_GB
+        , SAMPLE_DATA
+        , ITEM_CONT
+FROM   SPECIFY_MSG_TB
+WHERE  MSG_GB = 'RSP'
+AND    COM_SE_ID = #{COM_SE_ID}
+ORDER BY MSG_SPECIFY_NO
+</select>
+<!-- 2.2.1.단일조회_서비스 -->
+<select id="specification.selectServiceInfo" resultType="org.manager.portal.Specification.ServiceVO" parameterType="String">
+SELECT    COM_SE_ID
+        , SPECIFY_GB
+        , SE_LV
+        , OP_LV
+        , SE_NM_KR
+        , SE_NM_EN
+        , SE_CONT
+        , OP_CD
+        , URL_DEV
+        , URL_OP
+        , SECU_IP
+        , SECU_CE
+        , SECU_ROLE
+        , SECU_TLE
+        , AT_IS
+        , AT_IDS
+        , AT_ETC
+        , DEP_VER
+        , DEP_STR_DT
+        , DEP_DEP_DT
+        , CONS_CONT
+        , REG_DT
+FROM   SPECIFY_SE_TB
+WHERE  SPECIFY_GB = 'SE'
+AND    COM_SE_ID = #{COM_SE_ID}
+</select>
+<!-- 2.2.2.단일조회_오퍼레이션 -->
+<select id="specification.selectOpInfo" resultType="org.manager.portal.Specification.OperationVO" parameterType="String">
+SELECT    COM_SE_ID
+        , SPECIFY_GB
+        , SE_LV
+        , OP_LV
+        , SE_NM_KR
+        , SE_NM_EN
+        , SE_CONT
+        , REG_DT
+FROM   SPECIFY_SE_TB
+WHERE  SPECIFY_GB = 'OP'
+AND    COM_SE_ID = #{COM_SE_ID}
+</select>
+<!-- 2.2.3.단일조회_메시지 -->
+<select id="specification.selectMSGInfo" resultType="org.manager.portal.Specification.MSGSpecificationVO" parameterType="String">
+SELECT    MSG_SPECIFY_NO
+        , COM_SE_ID
+        , MSG_GB
+        , ITEM_NM_KR
+        , ITEM_NM_EN
+        , ITEM_SIZE
+        , ITEM_GB
+        , SAMPLE_DATA
+        , ITEM_CONT
+FROM   SPECIFY_MSG_TB
+WHERE  MSG_SPECIFY_NO = #{MSG_SPECIFY_NO}
+</select>
+<!-- 2.3.1.단일조회_서비스(하위포함) -->
+<select id="specification.selectServiceInfos" resultType="org.manager.portal.Specification.ServiceVO" parameterType="String">
+SELECT    COM_SE_ID
+        , SPECIFY_GB
+        , SE_LV
+        , OP_LV
+        , SE_NM_KR
+        , SE_NM_EN
+        , SE_CONT
+        , OP_CD
+        , URL_DEV
+        , URL_OP
+        , SECU_IP
+        , SECU_CE
+        , SECU_ROLE
+        , SECU_TLE
+        , AT_IS
+        , AT_IDS
+        , AT_ETC
+        , DEP_VER
+        , DEP_STR_DT
+        , DEP_DEP_DT
+        , CONS_CONT
+        , REG_DT
+FROM   SPECIFY_SE_TB
+WHERE  SPECIFY_GB = 'SE'
+AND    COM_SE_ID = #{COM_SE_ID}
+</select>
 </mapper>

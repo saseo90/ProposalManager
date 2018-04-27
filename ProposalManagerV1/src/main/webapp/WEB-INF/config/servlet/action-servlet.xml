@@ -9,8 +9,8 @@
     xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
 <!-- 
 2018.04.18 : 서블릿 맵핑관련 설정파일 : 이성현
@@ -22,28 +22,13 @@
 <!-- 패키지 내 어노테이션 Auto 기능  -->
 <!--     <mvc:annotation-driven/> 
  -->    
-    
-<!-- 패키지 내 Controller, Service, Repository 클래스의 auto detect를 위한 mvc 설정 -->
-<!--     <context:component-scan base-package="org.manager.portal"/>
-    <context:annotation-config/> -->
-    
+        
 <!-- 패키지 내 Controller, Service, Repository 클래스의 auto detect를 위한 mvc 설정 -->
     <context:component-scan base-package="org.manager.portal">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
-<!--     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <property name="defaultErrorView" value="cmmn/egovError"/>
-        <property name="exceptionMappings">
-            <props>
-                <prop key="org.springframework.dao.DataAccessException">common/error</prop>
-                <prop key="org.springframework.transaction.TransactionException">common/error</prop>
-                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">common/error</prop>
-                <prop key="org.springframework.security.AccessDeniedException">common/error</prop>
-            </props>
-        </property>
-    </bean> -->
     
 <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven >
@@ -122,7 +107,17 @@
     <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
         <property name="paramName" value="language" />
     </bean> -->
-
+<!--     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView" value="cmmn/egovError"/>
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.dao.DataAccessException">common/error</prop>
+                <prop key="org.springframework.transaction.TransactionException">common/error</prop>
+                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">common/error</prop>
+                <prop key="org.springframework.security.AccessDeniedException">common/error</prop>
+            </props>
+        </property>
+    </bean> -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="/error.do"/>
         <property name="exceptionMappings">
