@@ -3,6 +3,7 @@ package org.manager.portal.Specification.service;
 import java.io.InputStream;
 import java.util.List;
 
+import org.manager.portal.Specification.MSGSpecificationVO;
 import org.manager.portal.Specification.OperationVO;
 import org.manager.portal.Specification.ServiceVO;
 
@@ -42,4 +43,23 @@ public interface PortalSpecificationService {
      * @return
      */
     public List<OperationVO> selectOpInfoALL(String COM_SE_ID) throws Exception;
+    /**
+     * 2.1.3.전체조회_요청 메시지 : 특정 오퍼레이션의 요청 메시지 전제를 조회한다.
+     * @param COM_SE_ID 통합서비스아이디(오퍼레이션 아이디)
+     * @return
+     */
+    public List<MSGSpecificationVO> selectMSGRqsInfoALL(String COM_SE_ID) throws Exception;
+    /**
+     * 2.1.4.전체조회_응답 메시지 : 특정 오퍼레이션의 응답 메시지 전제를 조회한다.
+     * @param COM_SE_ID 통합서비스아이디(오퍼레이션 아이디)
+     * @return
+     */
+    public List<MSGSpecificationVO> selectMSGRspInfoALL(String COM_SE_ID) throws Exception;
+    
+    /**
+     * 특정 서비스의 클래스파일을 생성한다.
+     * @param  COM_SE_ID 통합서비스아이디(서비스아이디)
+     * @throws Exception
+     */
+    public void createServiceInfo(String COM_SE_ID) throws Exception;
 }

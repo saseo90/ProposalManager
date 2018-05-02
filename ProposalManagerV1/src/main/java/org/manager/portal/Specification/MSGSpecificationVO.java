@@ -1,10 +1,26 @@
 package org.manager.portal.Specification;
+
+import java.io.Serializable;
+
 /**
+ * 메시지명세서 SPECIFY_MSG_TB 를 위한 View Object 클래스
+ * @author 이성현
+ * @since 2018.04.22
+ * @version 1.0
+ * @see
  * 
- * 메시지명세서 SPECIFY_MSG_TB
+ * <pre>
+ * << 개정이력(Modification Information) >>
  *
+ *     수정일             수정자       수정내용
+ *  ------------ ------ ----------------------------
+ *   2018.04.22   이성현      최초 생성
+ *  
+ * </pre>
  */
-public class MSGSpecificationVO {
+public class MSGSpecificationVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     String MSG_SPECIFY_NO;//(PK)메시지명세번호
     String COM_SE_ID;//(FK)통합서비스아이디(오퍼레이션_아이디)
     String MSG_GB;//메시지구분(RQS|RSP)

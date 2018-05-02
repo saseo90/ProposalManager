@@ -15,7 +15,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+/**
+ * 설문조사 를 위한 컨트롤러 클래스
+ * @author 이성현
+ * @since 2018.04.22
+ * @version 1.0
+ * @see
+ * 
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *
+ *     수정일             수정자       수정내용
+ *  ------------ ------ ----------------------------
+ *   2018.04.22   이성현      최초 생성
+ *  
+ * </pre>
+ */
 @Controller
 public class SurveyController {
     protected final Log logger = LogFactory.getLog(getClass());

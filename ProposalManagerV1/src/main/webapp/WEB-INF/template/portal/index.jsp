@@ -68,5 +68,10 @@
 <script src="${pageContext.request.contextPath}/resources/AdminLTE/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="${pageContext.request.contextPath}/resources/AdminLTE/dist/js/app.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    
+});
+</script>
 </body>
 </html>

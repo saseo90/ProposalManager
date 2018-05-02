@@ -43,6 +43,11 @@
         </property>
     </bean>
      -->
+    <context:component-scan base-package="org.manager.ajax">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
 <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven >
         <mvc:message-converters>
@@ -58,11 +63,11 @@
     
     <bean id="jackson2MessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
 
-    <bean id="viewResolver"
+<!--     <bean id="viewResolver"
         class="org.springframework.web.servlet.view.BeanNameViewResolver"
         p:order="4"
         >
-    </bean>
+    </bean> -->
     
 <!-- 스케줄러풀 : 스케줄러 -->
 <!--

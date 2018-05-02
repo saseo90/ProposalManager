@@ -119,13 +119,13 @@
         </property>
     </bean> -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <property name="defaultErrorView" value="/error.do"/>
+        <property name="defaultErrorView" value="redirect:/error.do"/>
         <property name="exceptionMappings">
             <props>
-                <prop key="org.springframework.dao.DataAccessException">/error.do</prop>
-                <prop key="org.springframework.transaction.TransactionException">/error.do</prop>
-                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">/error.do</prop>
-                <prop key="org.springframework.security.AccessDeniedException">/error.do</prop>
+                <prop key="org.springframework.dao.DataAccessException">redirect:/error.do</prop>
+                <prop key="org.springframework.transaction.TransactionException">redirect:/error.do</prop>
+                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">redirect:/error.do</prop>
+                <prop key="org.springframework.security.AccessDeniedException">redirect:/error.do</prop>
             </props>
         </property>
     </bean>

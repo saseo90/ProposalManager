@@ -3,14 +3,23 @@ package org.manager.portal.Specification;
 import java.io.Serializable;
 
 /**
+ * 서비스 OR 오퍼레이션 명세서 SPECIFY_SE_TB 를 위한 Common View Object 클래스
+ * @author 이성현
+ * @since 2018.04.22
+ * @version 1.0
+ * @see
  * 
- * 메시지명세서 SPECIFY_MSG_TB
+ * <pre>
+ * << 개정이력(Modification Information) >>
  *
+ *     수정일             수정자       수정내용
+ *  ------------ ------ ----------------------------
+ *   2018.04.22   이성현      최초 생성
+ *  
+ * </pre>
  */
-public class SpecificationCOMVO implements Serializable {
-    /**
-     * 
-     */
+public class SpecificationCOM implements Serializable {
+
     private static final long serialVersionUID = 1L;
     
     String COM_SE_ID;//(PK)통합서비스아이디

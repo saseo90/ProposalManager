@@ -64,7 +64,23 @@ public class PortalSpecificationDAO extends EgovAbstractMapper {
         return selectList("specification.selectOpInfoALL", COM_SE_ID);
     }
     /**
-     * 2.1.3.전체조회_요청 메시지 : 특정 오퍼레이션의 요청 메시지 전제를 조회한다.
+     * 2.1.3.1.전체조회_메시지 : 특정 오퍼레이션의 메시지 전제를 조회한다.
+     * @param COM_SE_ID 통합서비스아이디(서비스 아이디)
+     * @return
+     */
+    public List<MSGSpecificationVO> selectMSGInfoALL1(String COM_SE_ID) {
+        return selectList("specification.selectMSGInfoALL1", COM_SE_ID);
+    }
+    /**
+     * 2.1.3.2.전체조회_메시지 : 특정 오퍼레이션의 메시지 전제를 조회한다.
+     * @param COM_SE_ID 통합서비스아이디(오퍼레이션 아이디)
+     * @return
+     */
+    public List<MSGSpecificationVO> selectMSGInfoALL2(String COM_SE_ID) {
+        return selectList("specification.selectMSGInfoALL2", COM_SE_ID);
+    }
+    /**
+     * 2.1.3.3.전체조회_요청 메시지 : 특정 오퍼레이션의 요청 메시지 전제를 조회한다.
      * @param COM_SE_ID 통합서비스아이디(오퍼레이션 아이디)
      * @return
      */
@@ -72,7 +88,7 @@ public class PortalSpecificationDAO extends EgovAbstractMapper {
         return selectList("specification.selectMSGRqsInfoALL", COM_SE_ID);
     }
     /**
-     * 2.1.4.전체조회_응답 메시지 : 특정 오퍼레이션의 응답 메시지 전제를 조회한다.
+     * 2.1.3.4.전체조회_응답 메시지 : 특정 오퍼레이션의 응답 메시지 전제를 조회한다.
      * @param COM_SE_ID 통합서비스아이디(오퍼레이션 아이디)
      * @return
      */
@@ -104,10 +120,17 @@ public class PortalSpecificationDAO extends EgovAbstractMapper {
         return selectOne("specification.selectMSGInfo", MSG_SPECIFY_NO);
     }
     /**
-     * 2.3.1.단일조회_서비스(하위포함)
+     * 2.3.1.단일조회_서비스(하위포함) : 오퍼레이션 및 메시지 포함
      * @return
      */
     public ServiceVO selectServiceInfos(String COM_SE_ID) {
         return selectOne("specification.selectServiceInfos",COM_SE_ID);
+    }
+    /**
+     * 2.3.2.단일조회_오퍼레이션(하위포함) : 메시지 포함
+     * @return
+     */
+    public OperationVO selectOpInfos(String COM_SE_ID) {
+        return selectOne("specification.selectOperationInfos",COM_SE_ID);
     }
 }

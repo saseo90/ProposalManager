@@ -1,11 +1,12 @@
 package org.manager.portal.Specification.web;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.common.util.CommonUtil;
+import org.manager.portal.Specification.MSGSpecificationVO;
 import org.manager.portal.Specification.OperationVO;
 import org.manager.portal.Specification.ServiceVO;
 import org.manager.portal.Specification.service.impl.PortalSpecificationServiceImpl;
@@ -14,9 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 /**
  * 포털 명세서 출력 호출을 위한 컨트롤러 클래스
  * @author 이성현
@@ -78,30 +77,53 @@ public class PortalSpecificationController {
                 psService.insertSpecificationDOC(file.getInputStream());  
             }
         }
-        return "portal/specification/main.tiles";
+        return "redirect:/portal/specification/main.do";
     }
     
     /**
      * 특정 서비스의 오퍼레이션 리스트를 반환한다.
+     * @param serviceKey : COM_SE_ID : 통합서비스아이디(서비스아이디)
+     * @param type       : MSG_GB    : 메시지구분(RQS|RSP)
+     * @param req
+     * @param model
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value={"/portal/specification/operationInfoList.do"}, method={RequestMethod.POST,RequestMethod.GET})
+    public String selectOpInfoALL(String serviceKey, String type, HttpServletRequest req, Model model) throws Exception{
+        Boolean flag = CommonUtil.matchesNumber(serviceKey);
+        if(flag){
+            List<OperationVO> selectOpInfoALL = null;
+            List<MSGSpecificationVO> selectMSGInfoALL = null;
+            if("operation".equals(type)){                
+                selectOpInfoALL = psService.selectOpInfoALL(serviceKey);
+                model.addAttribute("OperationInfoList", selectOpInfoALL);
+                return "portal/specification/selector/operation-selector";
+            }else if("msg".equals(type)){
+                selectMSGInfoALL = psService.selectMSGRqsInfoALL(serviceKey);
+                model.addAttribute("MSGRqsInfoALL", selectMSGInfoALL);
+                selectMSGInfoALL = psService.selectMSGRspInfoALL(serviceKey);
+                model.addAttribute("MSGRspInfoALL", selectMSGInfoALL);
+                return "portal/specification/selector/msg-selector";
+            }
+        }
+        return "portal/specification/selector/operation-selector";
+    }
+    
+    /**
+     * 특정 서비스의 클래스파일을 생성한다.
      * @param serviceKey : COM_SE_ID : 통합서비스아이디(서비스아이디)
      * @param req
      * @param modelAndView
      * @return
      * @throws Exception
      */
-    @RequestMapping(value={"/portal/specification/operationInfoList.ajax"}, method={RequestMethod.POST,RequestMethod.GET})
-    public @ResponseBody HashMap<String, Object> selectOpInfoALL(String serviceKey, HttpServletRequest req) throws Exception{
-        HashMap<String, Object> result = new HashMap<String, Object>();
-        String state = "성공";
-        List<OperationVO> selectOpInfoALL = null;
-        if(!"".equals(serviceKey)){
-            selectOpInfoALL = psService.selectOpInfoALL(serviceKey);
-            result.put("OperationInfoList", selectOpInfoALL);
+    @RequestMapping(value={"/portal/specification/createServiceInfo.do"}, method={RequestMethod.POST,RequestMethod.GET})
+    public String createServiceInfo(String serviceKey, String type, HttpServletRequest req, Model model) throws Exception{
+        Boolean flag = CommonUtil.matchesNumber(serviceKey);
+        if(flag){
+            psService.createServiceInfo(serviceKey);
         }
-        if(selectOpInfoALL==null||selectOpInfoALL.size()<1){
-            state="실패";
-        }
-        result.put("state", state);
-        return result;
+        return "redirect:/portal/specification/main.do";
     }
 }

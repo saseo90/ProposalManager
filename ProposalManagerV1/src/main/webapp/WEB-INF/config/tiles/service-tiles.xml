@@ -24,5 +24,5 @@
         <put-attribute name="main-topbar"     value="/WEB-INF/page-contents/portal/specification/main-topbar.jsp" />
         <put-attribute name="content-wrapper" value="/WEB-INF/page-contents/portal/specification/main-content.jsp" />
     </definition>
-    
+
 </tiles-definitions>

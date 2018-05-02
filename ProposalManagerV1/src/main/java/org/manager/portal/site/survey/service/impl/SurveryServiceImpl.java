@@ -9,7 +9,22 @@ import org.manager.portal.site.survey.SurveryItemVO;
 import org.manager.portal.site.survey.SurveryResultVO;
 import org.manager.portal.site.survey.service.SurveryService;
 import org.springframework.stereotype.Service;
-
+/**
+ * 설문조사 를 위한 서비스 클래스
+ * @author 이성현
+ * @since 2018.04.22
+ * @version 1.0
+ * @see
+ * 
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *
+ *     수정일             수정자       수정내용
+ *  ------------ ------ ----------------------------
+ *   2018.04.22   이성현      최초 생성
+ *  
+ * </pre>
+ */
 @Service(value="surveryService")
 public class SurveryServiceImpl implements SurveryService {
 

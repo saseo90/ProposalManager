@@ -1,11 +1,13 @@
 package org.manager.portal.Specification.service.impl;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -61,15 +63,15 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
             XWPFParagraph para =  (XWPFParagraph) iBodyElement;
             String temp = para.getParagraphText();
             if(temp!=null){
-                if(temp.contentEquals("서비스 개요")){
+                if(temp.contains("서비스 개요")){
                     code = 0;
-                } else if (temp.contains("오퍼레이션 목록")) {
+                } else if (temp.contains("오퍼레이션 목록")) {//사용하지 않음
 //                        code = 1;
                 } else if (temp.contains("오퍼레이션 명세")) {
                     code = 2;
                 } else if (temp.contentEquals("요청 메시지 명세")) {
                     code = 3;
-                } else if (temp.contentEquals("응답 메시지 명세")) {
+                } else if (temp.contentEquals("응답 메시지 명세")||temp.contentEquals("응답 메시지 예제")) {//2018.04.30 문서의 소제목이 다른경우 발생함.
                     code = 4;
                 }
             } 
@@ -167,11 +169,15 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
                 code = -1; 
             }else if(3==code){//요청 메시지 명세
                 List<MSGSpecificationVO> msgListReq = createMSGReqList(document, i);
-                result.get(result.size()-1).getOpInfoLast().setMsgListReq(msgListReq);
+                if(msgListReq!=null&&msgListReq.size()>0){//2018.04.30 명세서의 소제목 이름 다를 경우, 빈 객체만 생성되는 문제발생함. size 0 보다 클 때만 결과에 추가함.
+                    result.get(result.size()-1).getOpInfoLast().setMsgListReq(msgListReq);
+                }
                 code = -1;
             }else if(4==code){//응답 메시지 명세
-                List<MSGSpecificationVO> msgListRsp = createMSGRspList(document, i); 
-                result.get(result.size()-1).getOpInfoLast().setMsgListRsp(msgListRsp);
+                List<MSGSpecificationVO> msgListRsp = createMSGRspList(document, i);
+                if(msgListRsp!=null&&msgListRsp.size()>0){//2018.04.30 명세서의 소제목 이름 다를 경우, 빈 객체만 생성되는 문제발생함. size 0 보다 클 때만 결과에 추가함.
+                    result.get(result.size()-1).getOpInfoLast().setMsgListRsp(msgListRsp);
+                }
                 code = -1; 
             }//if
             i++;
@@ -186,16 +192,17 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
             for (OperationVO opInfo : opInfos) {
                 opInfo.setCOM_SE_ID(serviceVO.getCOM_SE_ID());
                 opInfo.setSE_LV(serviceVO.getCOM_SE_ID());
-//                    System.out.println("COM_SE_ID::"+opInfo.getCOM_SE_ID());
-//                    System.out.println("SE_LV::"+opInfo.getSE_LV());
+//                System.out.println("COM_SE_ID::"+opInfo.getCOM_SE_ID());
+//                System.out.println("SE_LV::"+opInfo.getSE_LV());
+//                System.out.println("OP_ID::"+opInfo.getOP_ID());
                 String successCountOP = ""+psDAO.insertOpertationInfo(opInfo);
-//                    System.out.println("성공::"+successCountOP);
+//                System.out.println("성공::"+successCountOP);
                 String operationPK=opInfo.getCOM_SE_ID();
 //                System.out.println("Service PK(Operation ID)::"+operationPK);
-//                System.out.println("OP_ID::"+opInfo.getOP_ID());
                 String successCountUp = ""+psDAO.insertOpertationInfo(operationPK);
 //                System.out.println("Operation_LV_UPdate::"+successCountUp);
                 List<MSGSpecificationVO> msgListReq = opInfo.getMsgListReq();
+//                System.out.println(msgListReq);
                 for (MSGSpecificationVO msgVO : msgListReq) {
                     msgVO.setCOM_SE_ID(operationPK);
 //                        System.out.println("항목영문::"+msgVO.getITEM_NM_EN());
@@ -206,7 +213,7 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
 //                        System.out.println("항목설명::"+msgVO.getITEM_CONT());
                     int successCountMSG = psDAO.insertMSGInfo(msgVO);
 //                        System.out.println("성공_요청메시지::"+successCountMSG);
-//                        throw new Exception();
+//                        throw new Exception();//트랜젝션 테스트 2018.04.30
                 }
                 List<MSGSpecificationVO> msgListRsp = opInfo.getMsgListRsp();
                 for (MSGSpecificationVO msgVO : msgListRsp) {
@@ -218,18 +225,17 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
         }
     }
     
-    private static List<MSGSpecificationVO> createMSGRspList(XWPFDocument document,int i) {
+    private  List<MSGSpecificationVO> createMSGRspList(XWPFDocument document,int i) {
         return createMSGList(document,"RSP", i);
     }
     
-    private static List<MSGSpecificationVO> createMSGReqList(XWPFDocument document,int i) {
+    private  List<MSGSpecificationVO> createMSGReqList(XWPFDocument document,int i) {
         return createMSGList(document,"RQS", i);
     }
     
-    private static List<MSGSpecificationVO> createMSGList(XWPFDocument document,String MSG_GB,int i) {
+    private  List<MSGSpecificationVO> createMSGList(XWPFDocument document,String MSG_GB,int i) {
         XWPFTable table = null;
         table = document.getTables().get(i);
-        MSGSpecificationVO sv = new MSGSpecificationVO();
         List<XWPFTableRow> rows = table.getRows();
         XWPFTableRow row = null;
         List<MSGSpecificationVO> msgList = new ArrayList<MSGSpecificationVO>();
@@ -253,7 +259,6 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
                 msgVO.setITEM_CONT(cont);
             }
             msgList.add(msgVO);
-//            System.out.println(msgVO);
         }
         
         return msgList;
@@ -267,5 +272,37 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
     @Override
     public List<OperationVO> selectOpInfoALL(String COM_SE_ID)  throws Exception {
         return psDAO.selectOpInfoALL(COM_SE_ID);
+    }
+
+    @Override
+    public List<MSGSpecificationVO> selectMSGRqsInfoALL(String COM_SE_ID) throws Exception {
+        return psDAO.selectMSGRqsInfoALL(COM_SE_ID);
+    }
+
+    @Override
+    public List<MSGSpecificationVO> selectMSGRspInfoALL(String COM_SE_ID) throws Exception {
+        return psDAO.selectMSGRspInfoALL(COM_SE_ID);
+    }
+
+    @Override
+    public void createServiceInfo(String COM_SE_ID) throws Exception {
+        ServiceVO serviceVO = psDAO.selectServiceInfos(COM_SE_ID);
+        if(serviceVO!=null){
+//            System.out.println(serviceVO);
+//            System.out.println(serviceVO.getOpInfos());
+            StringBuffer sb = new StringBuffer();
+            sb.append("package org.manager.portal.Specification.web;");
+            sb.append(System.getProperty( "line.separator"));
+            sb.append("import org.springframework.stereotype.Controller;");
+            sb.append(System.getProperty( "line.separator"));
+            sb.append("@Controller");
+            sb.append(System.getProperty( "line.separator"));
+            sb.append("public class PortalSpecificationController {");
+            sb.append(System.getProperty( "line.separator"));
+            sb.append("}");
+            File f = new File("D:/temp/output.java");
+    
+            FileUtils.writeStringToFile(f, sb.toString() , "UTF-8");
+        }
     }
 }

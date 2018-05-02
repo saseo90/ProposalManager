@@ -2,18 +2,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- Select2 -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/AdminLTE/select2/dist/css/select2.min.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/AdminLTE/datatables.net-bs/css/dataTables.bootstrap.min.css">
+<!-- Select2 -->
+<script src="${pageContext.request.contextPath}/resources/AdminLTE/select2/dist/js/select2.full.js"></script>
+<!-- DataTables -->
+<script src="${pageContext.request.contextPath}/resources/AdminLTE/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/AdminLTE/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Blank page
-    <small>it all starts here</small>
+     포털 명세서서비스
+    <small>홈페이지</small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="#">Examples</a></li>
-    <li class="active">Blank page</li>
+    <li class="active">Home</li>
   </ol>
 </section>
 
@@ -25,30 +30,17 @@
         <!-- general form elements -->
         <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title">Quick Example</h3>
+          <h3 class="box-title">API 문서 임포트 서비스</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" method="POSt" action="/portal/specification/insertDOC.do"  enctype="multipart/form-data">
           <div class="box-body">
             <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-            </div>
-            <div class="form-group">
               <label for="exampleInputFile">File input</label>
               <input type="file" id="exampleInputFile" name="files">
         
               <p class="help-block">Example block-level help text here.</p>
-            </div>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox"> Check me out
-              </label>
             </div>
           </div>
           <!-- /.box-body -->
@@ -57,28 +49,6 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
-        </div>
-        <!-- /.box -->
-        <!-- Default box -->
-        <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
-        
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-              <i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fa fa-times"></i></button>
-          </div>
-        </div>
-        <div class="box-body">
-          Start creating your amazing application!
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          Footer
-        </div>
-        <!-- /.box-footer-->
         </div>
         <!-- /.box -->
     </div>
@@ -97,67 +67,21 @@
             </div>
         </div>
         <!-- /.box-header -->
-        <!-- form start -->
-          <div class="box-body">
-              <div class="form-group">
-                <label>Minimal</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected" value="" >Alabama</option>
-                  <option value="">Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Minimal</label>
-                <select id="serviceSelectorById" class="form-control select2" style="width: 100%;">
+        <!-- body start -->
+        <div class="box-body">
+            <div class="form-group">
+            <label>서비스</label>
+            <select id="serviceSelectorById" class="form-control select2" style="width: 100%;">
 <c:forEach var="serviceInfo" items="${ServiceInfoList}">
     <option value='<c:out value="${serviceInfo.COM_SE_ID}"/>'><c:out value="${serviceInfo.SE_NM_KR}(${serviceInfo.SE_NM_EN})"/></option>
 </c:forEach>
-                </select>
-              </div>
-            <div class="form-group">
-               <label>Select Multiple</label>
-               <select class="form-control">
-                   <option>option 1</option>
-                   <option>option 2</option>
-                   <option>option 3</option>
-                   <option>option 4</option>
-                   <option>option 5</option>
-               </select>
+            </select>
             </div>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox"> Check me out
-              </label>
+            <div id="OperationSelectorDivById" class="form-group">
             </div>
-          </div>
-          <!-- /.box-body -->
-        
-          <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </div>
-        <!-- /.box -->
-        <!-- Default box -->
-        <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
-        
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-              <i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fa fa-times"></i></button>
-          </div>
-        </div>
-        <div class="box-body">
-          Start creating your amazing application!
         </div>
         <!-- /.box-body -->
+        <!-- foot Button Bar -->
         <div class="box-footer">
           Footer
         </div>
@@ -168,37 +92,84 @@
     <!-- /.col -->
     </div>
     <!-- /.row -->
+    <!-- row -->
+    <div class="row">
+    <!-- left column -->
+    <div class="col-md-12">
+    
+     <!-- Default box -->
+        <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">메시지명세서</h3>
+        
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div id="MSGSelectorById" class="box-body">
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          Footer
+        </div>
+        <!-- /.box-footer-->
+        </div>
+        <!-- /.box -->
+    
+    </div>
+    <!-- /.col -->
+    </div>
+    <!-- /.row -->
 </section>
 <!-- /.content -->
 </div>
-<!-- Select2 -->
-<script src="${pageContext.request.contextPath}/resources/AdminLTE/select2/dist/js/select2.full.js"></script>
 <script type="text/javascript">
 $(function(){
     //Initialize Select2 Elements
     $('.select2').select2();
-    
+/*     $('.example1').DataTable({
+        'paging'      : true,
+        'lengthChange': false,
+        'searching'   : false,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : false
+    }) */
     $('select#serviceSelectorById').on("change",function(){
         var serviceKeyVal = this.value;
         console.log("text::"+serviceKeyVal);
-        opInfoList(serviceKeyVal);
+        opInfoList(serviceKeyVal, "operation");
+        $("div#MSGSelectorById").html('');
     });
-
+    $('div#OperationSelectorDivById').on("change","select#OperationSelectorById",function(){
+        var operationKeyVal = this.value;
+        console.log("text::"+operationKeyVal);
+        opInfoList(operationKeyVal, "msg");
+    });
 });
 
-function opInfoList(serviceKeyVal){
+function opInfoList(KeyVal, typeVal){
     $.ajax({
-        url : '/portal/specification/operationInfoList.ajax'
+        url : '/portal/specification/operationInfoList.do'
        ,method : "POST"
-       ,data : { serviceKey: serviceKeyVal}
-       ,dataType : 'json'
+       ,data : { serviceKey : KeyVal, type : typeVal }
+       ,dataType : 'html'
        ,success : function(data){
-           console.log("응답후 로그");
+           if('operation' == typeVal){               
+               $("div#OperationSelectorDivById").html(data);
+           }else if('msg' == typeVal){
+               $("div#MSGSelectorById").html(data);
+               $('#example1').DataTable();
+               $('#example2').DataTable();
+           }
        }
     }).done(function(){
-        console.log("성공후로그");
+<%--        console.log("성공후로그"); --%>
     }).fail(function() {
-        console.log("실패후로그");
+<%--        console.log("실패후로그"); --%>
     });
 }
 </script>
