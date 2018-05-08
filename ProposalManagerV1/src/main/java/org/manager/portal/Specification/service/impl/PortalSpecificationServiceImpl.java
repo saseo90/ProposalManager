@@ -288,6 +288,7 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
     public void createServiceInfo(String COM_SE_ID) throws Exception {
         ServiceVO serviceVO = psDAO.selectServiceInfos(COM_SE_ID);
         if(serviceVO!=null){
+            String fileName = serviceVO.getSE_NM_EN()+"COM.java";
 //            System.out.println(serviceVO);
 //            System.out.println(serviceVO.getOpInfos());
             StringBuffer sb = new StringBuffer();
@@ -301,7 +302,28 @@ public class PortalSpecificationServiceImpl implements PortalSpecificationServic
             sb.append(System.getProperty( "line.separator"));
             sb.append("}");
             File f = new File("D:/temp/output.java");
-    
+            f.exists();
+            f.isDirectory();
+            f.isAbsolute();
+            f.canExecute();
+            f.canRead();
+            f.isFile();
+            f.canWrite();
+            f.createNewFile();
+            f.delete();
+            f.isHidden();
+            f.mkdirs();
+            f.mkdir();
+            f.renameTo(new File("fileName.text"));
+            f.setExecutable(true);
+            f.setExecutable(true, true);
+            f.setReadOnly();
+            f.setReadable(true);
+            f.setReadable(true, true);
+            f.setWritable(true);
+            f.setWritable(true, true);
+            f.setLastModified(new Long(1));
+                
             FileUtils.writeStringToFile(f, sb.toString() , "UTF-8");
         }
     }
