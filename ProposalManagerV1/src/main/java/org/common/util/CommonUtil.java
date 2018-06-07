@@ -10,9 +10,13 @@ public class CommonUtil {
      * @return
      */
     public static Boolean matchesNumber(String text) {
+        if(text==null){
+            return false;
+        }
+        Boolean flag = true;
         Pattern p = Pattern.compile("(^[0-9]*$)");//숫자만
         Matcher m = p.matcher(text);
-        Boolean flag = m.matches();
+        flag = m.matches();
         return flag;
     }
 

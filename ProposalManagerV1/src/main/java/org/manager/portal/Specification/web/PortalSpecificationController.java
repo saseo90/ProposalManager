@@ -66,6 +66,8 @@ public class PortalSpecificationController {
                 if(file.isEmpty()){
                     return "portal/specification/main.tiles";
                 }
+                
+                
 //                String contentType = file.getContentType();
 //                String name = file.getName();
 //                String originalFilename = file.getOriginalFilename();
